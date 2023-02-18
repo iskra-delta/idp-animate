@@ -1,2 +1,3 @@
-# idp-gala
-Galaksija emulator for the Iskra Delta Partner.
+# idp-animate
+
+Vector animations on the Iskra Delta Partner.
