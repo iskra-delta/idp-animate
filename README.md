@@ -89,7 +89,7 @@ Here is the table of commands.
 
  > The first bit (Bit 0) indicates whether the stroke continues (=1) or ends (=0). The second bit (Bit 1) indicates whether the pen changes. Bits 3 and 4 specify the new pen. The top nibble is reserved for additional commands.
 
-#### Samples
+#### Example sequence
 
 So let's decode the following sequence:
 
