@@ -6,7 +6,7 @@
 #include <animate.h>
 
 int main(int argc, char *argv[]) {
-   
+
     /* must have exactly 1 argument */
     if (argc!=2) {
         printf("Invalid command line arguments.\n");
@@ -29,7 +29,7 @@ int main(int argc, char *argv[]) {
     }
 
     /* and, finally, animate... */
-    animate(ani);
+    animate((animation_t *)ani);
 
     /* release the file */
     free(ani);
