@@ -106,6 +106,25 @@ So let's decode the following sequence:
         .db -20,10          ; move back to 10,10 (no drawing)
 ~~~
 
+#### The long move trick
+
+Escape sequence `-128, 0` can only be followed by single-byte coordinates. If you want to set the coordinates to values larger than 127, for example: to 400,300, you can use the following trick.
+
+~~~asm
+        .db -128            ; escape sequence
+        .db 0               ; command = end of stroke
+        ;; first 2 stroke bytes are initial x,y
+        .db 127, 127        ; move to 127, 127 
+        .db -128            ; escape sequence
+        .db 3               ; set color to transparent
+        .db 127, 127        ; transparent line to 254, 254
+        .db 127, 46         ; transparent line to 381, 300
+        .db 19, 0           ; transparent line to 400, 300
+        .db -128            ; escape sequence
+        .db 7               ; set color to foregroud color
+        ;; drawing from this point will start at 400, 300
+~~~
+
 For more examples, please explore the animations in this project's [extras](disk/extras/) directory.
 
 [language.url]:   https://en.wikipedia.org/wiki/ANSI_C
