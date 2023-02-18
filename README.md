@@ -3,17 +3,19 @@
 
 # Animate
 
-**Animate** is the animation player for the Iskra Delta Partner computer.
+The **Animate** is the animation player for the Iskra Delta Partner computer.
 
 ## Compiling
 
-To build the *Animate*, you will require a *Linux* machine that has the most up-to-date version of the *SDCC suite* and *cpmtools*.
+To build the *Animate*, you will need a *Linux* machine with the latest version of the *SDCC suite* and *cpmtools*.
 
-To download all necessary submodules, use the `--recursive` switch when cloning this repository:
+To download all required submodules, clone this repository with the `--recursive` switch:
 
-`git clone https://github.com/tstih/idp-animate.git --recursive`
+~~~
+git clone https://github.com/tstih/idp-animate.git --recursive
+~~~
 
-Execute `make` to create the *Animate*. After this, you can locate the disk image `fddb.img` containing sample animations and the executables in the `bin/` directory.
+Use `make` to build Animate. Afterwards, you will find the disk image `fddb.img` with sample animations and the executables in the `bin/` directory.
 
 ## Running
 
