@@ -33,12 +33,12 @@ The animation header data structure is provided below. It begins with two "magic
 
 ~~~cpp
 typedef struct animation_s {
-    uint16_t magic;
-    uint8_t format;
-    uint16_t width;
-    uint16_t height;
-    uint8_t frames;
-    uint16_t offsets[];
+    uint16_t magic;         /* 'A', 'N' */
+    uint8_t format;         /* 0 for standard animation */
+    uint16_t width;         /* 0 for widths > 255 */
+    uint16_t height;        /* 0 for heights > 255 */
+    uint8_t frames;         /* number of frames following */
+    uint16_t offsets[];     /* table of offsets to frames */
 } animation_t;
 ~~~
 
@@ -52,7 +52,11 @@ The table of offsets has as many records as there are frames, and each record is
 
 After the table of offsets, the frames are included. Each frame is a glyph. You can use either the `TINY` or `LINES` glyph formats, although Animate has only been tested with the `LINES` format.
 
-All Partner glyph formats support glyphs up to 256x256. However, since the ugpx library doesn't support clipping, the drawing functions don't verify the actual glyph size. As a result, it is theoretically possible to have larger glyphs. 
+ > All Partner glyph formats support glyphs up to 256x256. However, since the ugpx library doesn't support clipping, the drawing functions don't verify the actual glyph size. As a result, it is theoretically possible to have larger glyphs. 
+
+### LINES glyph format 
+
+#### Header
 
 Here is the LINES glyph header.
 
@@ -60,7 +64,13 @@ Here is the LINES glyph header.
 
 The 12-bit `number of lines` value specifies how many bytes follow the glyph header. The width and height are each represented by 1 byte. If the values exceed 255, set both of them to 0. Animate will ignore them.
 
-The bytes are signed, giving a range of -128 to 127. Every two bytes indicate the x and y coordinates of a relative line from the current position to the new position. The value of -128 is utilized as an escape sequence and must be followed by a command.
+#### Line coordinates 
+
+All glyph bytes are signed, giving a range of -128 to 127. Every two bytes indicate the x and y coordinates of a relative line from the current position to the new position. 
+
+#### Escape sequences and commands
+
+The value of -128 is utilized as an escape sequence and must be followed by a command.
 
 Here is the table of commands.
 
@@ -78,6 +88,8 @@ Here is the table of commands.
 | 0000 11 1 1 |	Reserved                      |
 
  > The first bit (Bit 0) indicates whether the stroke continues (=1) or ends (=0). The second bit (Bit 1) indicates whether the pen changes. Bits 3 and 4 specify the new pen. The top nibble is reserved for additional commands.
+
+#### Samples
 
 So let's decode the following sequence:
 
